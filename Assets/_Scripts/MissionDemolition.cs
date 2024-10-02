@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public enum GameMode {
     idle,
     playing,
-    levelEnd
+    levelEnd,
+    gameOver
 }
 
 public class MissionDemolition : MonoBehaviour
@@ -16,6 +18,8 @@ public class MissionDemolition : MonoBehaviour
     [Header("Inscribed")]
     public TMP_Text uitLevel;
     public TMP_Text uitShots;
+    public TMP_Text uitGameOver;
+    public Button uibPlayAgain;
     public Vector3 castlePos;
     public GameObject[] castles;
 
@@ -44,7 +48,7 @@ public class MissionDemolition : MonoBehaviour
 
         Projectile.DESTROY_PROJECTILES();
 
-        castle = Instantiate<GameObject>(castles[level]);
+        castle = Instantiate(castles[level]);
         castle.transform.position = castlePos;
 
         Goal.goalMet = false;
@@ -57,6 +61,14 @@ public class MissionDemolition : MonoBehaviour
     }
 
     void UpdateGUI() {
+        if (mode == GameMode.gameOver) {
+            uitGameOver.gameObject.SetActive(true);
+            uibPlayAgain.gameObject.SetActive(true);
+        } else {
+            uitGameOver.gameObject.SetActive(false);
+            uibPlayAgain.gameObject.SetActive(false);
+        }
+
         uitLevel.text = "Level: " + (level + 1) + " of " + levelMax;
         uitShots.text = "Shots Taken: " + shotsTaken;
     }
@@ -76,10 +88,21 @@ public class MissionDemolition : MonoBehaviour
     void NextLevel() {
         level++;
         if (level == levelMax) {
-            level = 0;
-            shotsTaken = 0;
+            mode = GameMode.gameOver;
+            level--;
+        } else {
+            StartLevel();
         }
-        StartLevel();
+    }
+
+    static public void PLAY_AGAIN() {
+        S.level = 0;
+        S.shotsTaken = 0;
+        S.StartLevel();
+    }
+
+    static public void RESET_LEVEL() {
+        S.StartLevel();
     }
 
     static public void SHOT_FIRED() {
