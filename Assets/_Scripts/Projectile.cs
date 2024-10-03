@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -46,7 +48,9 @@ public class Projectile : MonoBehaviour
 
         if (maxDelta <= Physics.sleepThreshold) {
             awake = false;
-            rigid.Sleep();
+            if (GetComponent<Watermelon>() == null && !Goal.goalMet) {
+                FollowCam.SWITCH_VIEW(FollowCam.eView.slingshot);
+            }
         }
     }
 

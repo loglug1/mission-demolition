@@ -31,13 +31,6 @@ public class FollowCam : MonoBehaviour
         Vector3 destination = Vector3.zero;
 
         if (POI != null) {
-            Rigidbody poiRigid = POI.GetComponent<Rigidbody>();
-            if ((poiRigid != null) && poiRigid.IsSleeping()) {
-                POI = null;
-            }
-        }
-
-        if (POI != null) {
             destination = POI.transform.position;
         }
 
