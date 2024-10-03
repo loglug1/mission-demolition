@@ -11,6 +11,7 @@ public class Goal : MonoBehaviour
         Projectile proj = other.GetComponent<Projectile>();
         if (proj != null) {
             goalMet = true;
+            GetComponent<AudioSource>().Play();
             Material mat = GetComponent<Renderer>().material;
             Color c = mat.color;
             c.a = 0.75f;

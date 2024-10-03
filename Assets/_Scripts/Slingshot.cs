@@ -102,6 +102,7 @@ public class Slingshot : MonoBehaviour
             projRB.collisionDetectionMode = CollisionDetectionMode.Continuous;
             projRB.velocity = -mouseDelta * velocityMult;
 
+            GetComponent<AudioSource>().Play();
             FollowCam.SWITCH_VIEW(FollowCam.eView.slingshot);
 
             FollowCam.POI = projectile;

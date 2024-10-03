@@ -30,13 +30,13 @@ public class Watermelon : MonoBehaviour
         foreach (Collider hitc in hitColliders) {
             Rigidbody hitcRB = hitc.GetComponent<Rigidbody>();
             if (hitcRB != null) {
-                print("hit " + hitc.name);
                 hitcRB.AddExplosionForce(explosionPower, transform.position, blastRadius, verticalPower);
             }
         }
         Destroy(GetComponent<Renderer>());
         Destroy(GetComponent<SphereCollider>());
         GetComponent<Rigidbody>().isKinematic = true;
+        GetComponent<AudioSource>().Play();
         Invoke("ResetCamera", 1f);
     }
 
